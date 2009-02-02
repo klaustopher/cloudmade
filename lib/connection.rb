@@ -46,7 +46,13 @@ module CloudMade
       Net::HTTP.start(server_url, self.port) {|http|
         req = Net::HTTP::Get.new("#{request}")
         response = http.request(req)
-        result = response.body
+        case response
+        when Net::HTTPSuccess, Net::HTTPRedirection
+          result = response.body
+        else
+          raise HTTPError.new("Couldn't read data. HTTP status: #{response}")
+        end
+        
       }
       return result
     end
