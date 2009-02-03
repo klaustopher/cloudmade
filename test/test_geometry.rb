@@ -95,6 +95,6 @@ class BBoxTest < Test::Unit::TestCase #:nodoc: all
   end
 end
 
-class GeometryTest < Test::Unit::TestCase #:nodoc: all
-  # TODO: add code to parse that
-end
+# TODO: add code to parse that
+#class GeometryTest < Test::Unit::TestCase #:nodoc: all
+#end

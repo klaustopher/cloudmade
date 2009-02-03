@@ -14,6 +14,7 @@ spec = Gem::Specification.new do |s|
   s.description = s.summary
   s.author = 'cloudmade.com'
   s.email = 'ishubovych@cloudmade.com'
+  s.homepage = 'http://developers.cloudmade.com/projects/show/ruby-lib'
   # s.executables = ['your_executable_here']
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{bin,lib,spec}/**/*")
   s.require_path = "lib"

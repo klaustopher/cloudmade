@@ -57,10 +57,6 @@ module CloudMade
       GeoResults.new(JSON.parse(connect request)).results[0]
     end
 
-    def get_location(object_id)
-      GeoResult.new(JSON.parse(connect "/get_location/#{object_id}.js"))
-    end
-
     # :nodoc:
     def url_template
       return "http://#{@subdomain}.#{@connection.url}/#{@connection.api_key}/geocoding"
@@ -100,7 +96,9 @@ module CloudMade
 
     def initialize(data)
       self.found = Integer(data['found'])
-      self.results = data['features'].map { |feature_data| CloudMade::GeoResult.new(feature_data) }
+      if (data['features'] != nil) then
+        self.results = data['features'].map { |feature_data| CloudMade::GeoResult.new(feature_data) }
+      end
       self.bounds = CloudMade::BBox.from_coordinates(data['bounds']) if data.has_key? 'bounds'
     end
 

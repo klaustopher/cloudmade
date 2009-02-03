@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.join('..', 'lib')
 require 'cloudmade'
 require 'test/unit'
-require 'mock_connection'
+require 'test/mock_connection'
 
 include CloudMade
 

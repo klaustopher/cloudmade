@@ -1,14 +1,25 @@
 require 'cloudmade'
+include CloudMade
 
-cm = CloudMade::Client.from_parameters('BC9A493B41014CAABB98F0471D759707')
+cm = CloudMade::Client.from_parameters('BC9A493B41014CAABB98F0471D759707', nil, 5003)
+
+module CloudMade
+  class GeocodingService < Service
+    def url_template
+      return "http://10.1.3.235:5003/geocoding"
+    end
+
+    def url
+      return "10.1.3.235"
+    end
+  end
+end
 
 puts 'Testing CloudMade Client'
 puts "Geocoding"
 puts "---------"
 puts "Find"
 puts cm.geocoding.find('Potsdamer Platz, Berlin, Germany')
-puts "Get location"
-puts cm.geocoding.get_location(1)
 puts "Find closest"
 puts cm.geocoding.find_closest('pub', 51.66117, 13.37654)
 

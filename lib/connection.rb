@@ -52,7 +52,6 @@ module CloudMade
         else
           raise HTTPError.new("Couldn't read data. HTTP status: #{response}")
         end
-        
       }
       return result
     end
