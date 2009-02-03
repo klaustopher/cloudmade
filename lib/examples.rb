@@ -1,19 +1,7 @@
 require 'cloudmade'
 include CloudMade
 
-cm = CloudMade::Client.from_parameters('BC9A493B41014CAABB98F0471D759707', nil, 5003)
-
-module CloudMade
-  class GeocodingService < Service
-    def url_template
-      return "http://10.1.3.235:5003/geocoding"
-    end
-
-    def url
-      return "10.1.3.235"
-    end
-  end
-end
+cm = CloudMade::Client.from_parameters('BC9A493B41014CAABB98F0471D759707')
 
 puts 'Testing CloudMade Client'
 puts "Geocoding"
