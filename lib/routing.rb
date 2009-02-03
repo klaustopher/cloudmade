@@ -102,7 +102,7 @@ module CloudMade
     end
 
     def to_s
-      route_instructions.to_s
+      self.instructions.to_s
     end
   end
 
