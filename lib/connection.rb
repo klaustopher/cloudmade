@@ -15,9 +15,9 @@
 #
 
 module CloudMade
-  # This +Connection+ class designed to provide connection to CloudMade services.
-  # Normally you don't need to create it manually.
-  # But sometimes it is useful to create connection
+  # This +Connection+ class provides a connection to CloudMade online services (HTTP API).
+  # Normally you don't need to create it directly. Construct a 'Client' from parameters instead.
+  #
   # Connection examples:
   #
   # conn = CloudMade::Connection.new('cloudmade.com', 80, 'FAKE_API_KEY')
@@ -39,7 +39,7 @@ module CloudMade
       self.port = port
     end
 
-    #:nodoc:
+    # Make a HTTP connection and send a request. Called by the cloudmade 'Client' object internally
     def connect(server_url, request)
       puts "#{server_url} #{request}"
       result = nil
@@ -56,12 +56,12 @@ module CloudMade
       return result
     end
 
-    #:nodoc:
+    # Convenience method. Return the base URL and port of this Connection
     def url
       return "#{@base_url}#{@port != nil ? ':' + port.to_s : ''}"
     end
 
-    #:nodoc:
+    # Port number of this Connection
     def port
       return 80 if @port == nil
       @port

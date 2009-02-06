@@ -66,7 +66,7 @@ module CloudMade
 
   # Location of the object in geographical terms
   class Location
-    # road Road on which object is situated
+    # road: Road on which object is situated
     attr_accessor :road
     # city: City, where the object is situated
     attr_accessor :city
