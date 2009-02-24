@@ -55,7 +55,11 @@ module CloudMade
       lat_lon = "#{CGI.escape(lon.to_s + '+' + lat.to_s)}"
       request = "/closest/#{object_type}/#{lat_lon}.js?#{Service.to_url_params(options)}"
       geo_results = GeoResults.new(JSON.parse(connect request))
-      (geo_results.results != nil and geo_results.results.size > 0) ? geo_results.results[0] : nil
+      if (geo_results.results != nil and geo_results.results.size > 0)
+        return geo_results.results[0]
+      else
+        raise ObjectNotFound.new
+      end
     end
 
     # :nodoc:

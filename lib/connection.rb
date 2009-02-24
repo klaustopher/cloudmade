@@ -41,7 +41,7 @@ module CloudMade
 
     # Make a HTTP connection and send a request. Called by the cloudmade 'Client' object internally
     def connect(server_url, request)
-      puts "#{server_url} #{request}"
+      #sputs "#{server_url} #{request}"
       result = nil
       Net::HTTP.start(server_url, self.port) {|http|
         req = Net::HTTP::Get.new("#{request}")
