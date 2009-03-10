@@ -7,7 +7,7 @@ require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'cloudmade'
-  s.version = '0.1.1'
+  s.version = '0.1.2'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README', 'LICENSE']
   s.summary = 'CloudMade Ruby API'
