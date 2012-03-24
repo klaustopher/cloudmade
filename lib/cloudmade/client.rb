@@ -34,26 +34,22 @@ module CloudMade
 
     # Tiles service
     def tiles
-      @tiles = TilesService.new(self.connection, 'tile') if @tiles == nil
-      return @tiles
+      @tiles ||= TilesService.new(self.connection, 'tile')
     end
 
     # Geocoding service
     def geocoding
-      @geocoding = GeocodingService.new(self.connection, 'geocoding') if @geocoding == nil
-      return @geocoding
+      @geocoding ||= GeocodingService.new(self.connection, 'geocoding')
     end
 
     # Routing service
     def routing
-      @routing = RoutingService.new(self.connection, 'routes') if @routing == nil
-      return @routing
+      @routing ||= RoutingService.new(self.connection, 'routes')
     end
 
     # Locations service
     def locations
-      @locations = LocationsService.new(self.connection, '') if @locations == nil
-      return @locations
+      @locations ||= LocationsService.new(self.connection, '')
     end
 
     class << self
