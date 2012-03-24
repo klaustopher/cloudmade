@@ -36,6 +36,7 @@ module CloudMade
       options['bbox_only'] = true unless options.has_key? 'bbox_only'
       options['return_geometry'] = true unless options.has_key? 'return_geometry'
       request = "/find/#{CGI.escape(query)}.js?#{Service.to_url_params(options)}"
+        
       GeoResults.new(JSON.parse(connect request))
     end
 
@@ -52,7 +53,7 @@ module CloudMade
 
     # TODO: Modify lat, lon parameters to point
     def find_closest(object_type, lat, lon, options = {})
-      lat_lon = "#{CGI.escape(lon.to_s + '+' + lat.to_s)}"
+      lat_lon = "#{CGI.escape(lat.to_s + '+' + lon.to_s)}"
       request = "/closest/#{object_type}/#{lat_lon}.js?#{Service.to_url_params(options)}"
       geo_results = GeoResults.new(JSON.parse(connect request))
       raise ObjectNotFound.new if (geo_results.results == nil or geo_results.results.size == 0)
@@ -97,7 +98,7 @@ module CloudMade
     attr_accessor :bounds
 
     def initialize(data)
-      self.found = Integer(data['found'])
+      self.found = Integer(data['found']) if data.has_key? 'found'
       if (data['features'] != nil) then
         self.results = data['features'].map { |feature_data| CloudMade::GeoResult.new(feature_data) }
       end

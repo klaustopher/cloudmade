@@ -42,11 +42,12 @@ module CloudMade
 
     protected
       def initialize(connection, subdomain)
-        self.connection = connection
-        self.subdomain = subdomain
+        @connection = connection
+        @subdomain = subdomain
       end
 
       def connect(request)
+        puts "Requesting: #{url} -- #{url_template}#{request}"
         return @connection.connect(url, "#{url_template}#{request}")
       end
   end
