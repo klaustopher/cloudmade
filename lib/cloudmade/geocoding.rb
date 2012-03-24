@@ -35,11 +35,36 @@ module CloudMade
       options['skip'] = 0 unless options.has_key? 'skip'
       options['bbox_only'] = true unless options.has_key? 'bbox_only'
       options['return_geometry'] = true unless options.has_key? 'return_geometry'
-      request = "/find/#{CGI.escape(query)}.js?#{Service.to_url_params(options)}"
+      
+      query = CGI.escape(query)
+      params = Service.to_url_params(options)
+      
+      request = "/v2/find.js?query=#{query}&#{params}"
         
-      GeoResults.new(JSON.parse(connect request))
+      GeoResults.new(JSON.parse(connect(request)))
     end
-
+    
+    def find_poi_around_point(object_type, lat, lon, options = {})
+      query = "#{lat.to_f.to_s},#{lon.to_f.to_s}"
+      options['distance'] = 2000 unless options.has_key? 'distance'
+      options['results'] = 10 unless options.has_key? 'results'
+      
+      params = Service.to_url_params(options)
+        
+      request = "/v2/find.js?object_type=#{object_type}&around=#{query}&#{params}"
+      GeoResults.new(JSON.parse(connect(request)))
+    end
+    
+    def find_poi_around(object_type, query, options = {})
+      query = CGI.escape(query)
+      options['distance'] = 2000 unless options.has_key? 'distance'
+      options['results'] = 10 unless options.has_key? 'results'
+      params = Service.to_url_params(options)
+        
+      request = "/v2/find.js?object_type=#{object_type}&around=#{query}&#{params}"
+      GeoResults.new(JSON.parse(connect(request)))
+    end
+    
     # Find closest object to a given point.
     # For a list of available object types, see:
     # http://www.cloudmade.com/developers/docs/geocoding-http-api/object_types
@@ -53,9 +78,7 @@ module CloudMade
 
     # TODO: Modify lat, lon parameters to point
     def find_closest(object_type, lat, lon, options = {})
-      lat_lon = "#{CGI.escape(lat.to_s + '+' + lon.to_s)}"
-      request = "/closest/#{object_type}/#{lat_lon}.js?#{Service.to_url_params(options)}"
-      geo_results = GeoResults.new(JSON.parse(connect request))
+      geo_results = find_poi_around_point(object_type, lat, lon, options)
       raise ObjectNotFound.new if (geo_results.results == nil or geo_results.results.size == 0)
       return geo_results.results[0]
     end
@@ -104,10 +127,6 @@ module CloudMade
       end
       self.bounds = CloudMade::BBox.from_coordinates(data['bounds']) if data.has_key? 'bounds'
     end
-
-    def to_s
-      results.join(',') if results != nil
-    end
   end
 
   class GeoResult
@@ -135,10 +154,6 @@ module CloudMade
       else
         self.location = nil
       end
-    end
-
-    def to_s
-      self.geometry.to_s
     end
   end
 end

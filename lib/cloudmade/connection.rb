@@ -43,16 +43,16 @@ module CloudMade
     def connect(server_url, request)
       #sputs "#{server_url} #{request}"
       result = nil
-      Net::HTTP.start(server_url, self.port) {|http|
+      Net::HTTP.start(server_url, self.port) do |http|
         req = Net::HTTP::Get.new("#{request}")
         response = http.request(req)
         case response
-        when Net::HTTPSuccess, Net::HTTPRedirection
-          result = response.body
-        else
-          raise HTTPError.new("Couldn't read data. HTTP status: #{response}")
-        end
-      }
+          when Net::HTTPSuccess, Net::HTTPRedirection
+            result = response.body
+          else
+            raise HTTPError.new("Couldn't read data. HTTP status: #{response}")
+          end
+      end
       return result
     end
 
@@ -63,8 +63,7 @@ module CloudMade
 
     # Port number of this Connection
     def port
-      return 80 if @port == nil
-      @port
+      @port ||= 80
     end
   end
 end
