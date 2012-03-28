@@ -1,4 +1,6 @@
-$LOAD_PATH.unshift File.join('..', 'lib')
+$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path("../..", __FILE__)
+
 require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'

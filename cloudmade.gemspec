@@ -14,14 +14,14 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "cloudmade"
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.test_files    =  Dir.glob('test/test_*.rb')
   s.require_paths = ["lib"]
   
   s.has_rdoc    = true
-  s.extra_rdoc_files = ['README', 'LICENSE']
+  s.extra_rdoc_files = ['README.md', 'LICENSE']
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
+  s.add_development_dependency "test-unit"
+  s.add_development_dependency "rake"
   # s.add_runtime_dependency "rest-client"
 end
