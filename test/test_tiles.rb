@@ -1,4 +1,6 @@
-$LOAD_PATH.unshift File.join('..', 'lib')
+$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path("../..", __FILE__)
+
 require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'
@@ -7,7 +9,7 @@ class TilesServiceTest < Test::Unit::TestCase #:nodoc: all
 
   def setup
     @connection = MockConnection.new('FAKE-API-KEY', 'fake-cloudmade.com')
-    @tiles = TilesService.new(@connection, 'tile')
+    @tiles = CloudMade::TilesService.new(@connection, 'tile')
   end
 
   def test_latlon2tilenums

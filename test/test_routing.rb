@@ -1,4 +1,6 @@
-$LOAD_PATH.unshift File.join('..', 'lib')
+$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path("../..", __FILE__)
+
 require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'
@@ -43,12 +45,12 @@ class RoutingServiceTest < Test::Unit::TestCase #:nodoc: all
   eos
 
   def test_empty_routing
-    transit_points = [Point.new([51.22, 4.41]), Point.new([51.2, 4.41])]
+    transit_points = [CloudMade::Point.new([51.22, 4.41]), CloudMade::Point.new([51.2, 4.41])]
     connection = MockConnection.new('FAKE-API-KEY', 'fake-cloudmade.com')
     connection.return_data = RETURN_DATA_EMPTY
-    routing = RoutingService.new(connection, 'routing')
+    routing = CloudMade::RoutingService.new(connection, 'routing')
     begin
-        route = routing.route(Point.new([51.22545, 4.40730]), Point.new([51.23, 4.42]),
+        route = routing.route(CloudMade::Point.new([51.22545, 4.40730]), CloudMade::Point.new([51.23, 4.42]),
                           transit_points, 'car', 'shortest')
         assert false
     rescue RouteNotFound
@@ -57,12 +59,12 @@ class RoutingServiceTest < Test::Unit::TestCase #:nodoc: all
   end
 
   def test_routing
-    transit_points = [Point.new([51.22, 4.41]), Point.new([51.2, 4.41])]
+    transit_points = [CloudMade::Point.new([51.22, 4.41]), CloudMade::Point.new([51.2, 4.41])]
     connection = MockConnection.new('FAKE-API-KEY', 'fake-cloudmade.com')
     connection.return_data = RETURN_DATA_ROUTING
-    routing = RoutingService.new(connection, 'routing')
+    routing = CloudMade::RoutingService.new(connection, 'routing')
     begin
-      route = routing.route(Point.new([51.22545, 4.40730]), Point.new([51.23, 4.42]),
+      route = routing.route(CloudMade::Point.new([51.22545, 4.40730]), CloudMade::Point.new([51.23, 4.42]),
                         transit_points, 'car', 'shortest')
       assert_equal route.version, '0.3'
       assert_equal route.summary.total_time, 852

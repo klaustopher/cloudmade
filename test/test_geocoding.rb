@@ -44,10 +44,10 @@ class GeocodingServiceTest < Test::Unit::TestCase #:nodoc: all
   def test_find
     connection = MockConnection.new('FAKE-API-KEY', 'fake-cloudmade.com')
     connection.return_data = RETURN_DATA_FIND
-    geocoding = GeocodingService.new(connection, 'geocoding')
+    geocoding = CloudMade::GeocodingService.new(connection, 'geocoding')
     geo_results = geocoding.find('/geocoding/find/Oxford%20street%2CLondon.js?bbox_only=True&skip=0&return_location=True&results=2&return_geometry=True')
     assert geo_results.found == 2
-    assert_equal geo_results.bounds, BBox.from_coordinates([[51.51341,-0.15853],[51.51722,-0.12261]])
+    assert_equal geo_results.bounds, CloudMade::BBox.from_coordinates([[51.51341,-0.15853],[51.51722,-0.12261]])
     assert geo_results.results[0].properties["name"] == "New Oxford Street"
     assert geo_results.results[1].properties["name"] == "Oxford Street"
     assert_equal geo_results.results[1].geometry.class.to_s, 'CloudMade::MultiLine'
@@ -57,13 +57,13 @@ class GeocodingServiceTest < Test::Unit::TestCase #:nodoc: all
   def test_closest
     connection = MockConnection.new('FAKE-API-KEY', 'fake-cloudmade.com')
     connection.return_data = RETURN_DATA_CLOSEST
-    geocoding = GeocodingService.new(connection, 'geocoding')
+    geocoding = CloudMade::GeocodingService.new(connection, 'geocoding')
     geo_result = geocoding.find_closest("poi", 53.51722, -0.12312,
       :options => { :return_location => true, :return_geometry => false})
     assert_equal geo_result.class.to_s, 'CloudMade::GeoResult'
     #assert_equal connection.uri, """/geocoding/closest/poi/53.51722,-0.12312.js?return_location=True&return_geometry=False"""
     assert_nil geo_result.geometry
     assert_equal geo_result.location.city, 'Kingston upon Hull'
-    assert_equal geo_result.centroid, Point.new(53.52435, -0.143)
+    assert_equal geo_result.centroid, CloudMade::Point.new(53.52435, -0.143)
   end
 end

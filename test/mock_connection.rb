@@ -1,6 +1,9 @@
+$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path("../..", __FILE__)
+
 require 'cloudmade'
 
-class MockConnection < Connection
+class MockConnection < CloudMade::Connection
   attr_accessor :return_data
   attr_accessor :request
   attr_accessor :server_url

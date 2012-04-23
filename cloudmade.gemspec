@@ -5,9 +5,9 @@ require "cloudmade/version"
 Gem::Specification.new do |s|
   s.name        = "cloudmade"
   s.version     = Cloudmade::VERSION
-  s.authors     = ["Klaus Zanders", "cloudmade.com"]
+  s.authors     = ["Klaus Zanders", "forked from cloudmade.com"]
   s.email       = ["klaus.zanders@gmail.com", "ishubovych@cloudmade.com"]
-  s.homepage    = "http://developers.cloudmade.com/projects/show/ruby-lib"
+  s.homepage    = "https://github.com/klaustopher/cloudmade"
   s.summary     = 'CloudMade Ruby API'
   s.description = s.summary
 
