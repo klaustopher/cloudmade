@@ -14,8 +14,6 @@
 # limitations under the License.
 #
 
-include CloudMade
-
 module CloudMade
 
   # Class that is responsible for tile services of Cloudmade

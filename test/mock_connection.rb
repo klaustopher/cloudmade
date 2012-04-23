@@ -1,7 +1,5 @@
 require 'cloudmade'
 
-include CloudMade
-
 class MockConnection < Connection
   attr_accessor :return_data
   attr_accessor :request

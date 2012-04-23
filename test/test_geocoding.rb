@@ -5,8 +5,6 @@ require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'
 
-include CloudMade
-
 class GeocodingServiceTest < Test::Unit::TestCase #:nodoc: all
 
   RETURN_DATA_FIND = <<-eos
