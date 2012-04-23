@@ -3,8 +3,6 @@ require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'
 
-include CloudMade
-
 class RoutingServiceTest < Test::Unit::TestCase #:nodoc: all
 
   RETURN_DATA_EMPTY = '{}'
