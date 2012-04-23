@@ -2,8 +2,6 @@ $LOAD_PATH.unshift File.join('..', 'lib')
 require 'cloudmade'
 require 'test/unit'
 
-include CloudMade
-
 class PointTest < Test::Unit::TestCase #:nodoc: all
   
   def test_initialization

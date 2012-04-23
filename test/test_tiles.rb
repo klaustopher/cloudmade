@@ -3,8 +3,6 @@ require 'cloudmade'
 require 'test/unit'
 require 'test/mock_connection'
 
-include CloudMade
-
 class TilesServiceTest < Test::Unit::TestCase #:nodoc: all
 
   def setup

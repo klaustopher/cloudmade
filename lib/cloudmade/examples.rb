@@ -1,5 +1,4 @@
 require 'cloudmade'
-include CloudMade
 
 cm = CloudMade::Client.from_parameters('BC9A493B41014CAABB98F0471D759707')
 
