@@ -1,4 +1,5 @@
 # CloudMade
+[![Build Status](https://secure.travis-ci.org/klaustopher/cloudmade.png?branch=master)](http://travis-ci.org/klaustopher/cloudmade)
 ---
 
 This is a ruby Gem to use the amazing API for [Cloudmade](http://www.cloudmade.com). They bring you cool services powered by [OpenStreetMaps](http://www.openstreetmaps.org). Check out their website.
