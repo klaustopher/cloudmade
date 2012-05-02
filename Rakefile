@@ -3,6 +3,7 @@ require "bundler/gem_tasks"
 require 'rake'
 require 'rake/testtask'
 
+task :default => [:test_units]
 task :test => [:test_units]
 
 desc "Run unit tests"
