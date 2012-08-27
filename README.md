@@ -11,7 +11,7 @@ In the future I will update this Gem to use the version v2 of the API. I just :h
 
 ## Usage
 Add the Gem to your Gemfile:
-  gem 'cloudmade', '0.1.2'
+  gem 'cloudmade', '0.1.4'
 
 Run the bundle command to update your Gemspec and you're ready to roll
 
