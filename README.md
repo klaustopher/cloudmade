@@ -41,7 +41,7 @@ At the end I will attach the original documentation. Have fun:
 
 CloudMadeAPI is a Ruby API for CloudMade's online services: Geocoding, Routing and Tiles.
 
-API documentation is available http://cloudmade.com/developers/docs/
+API documentation is available http://developers.cloudmade.com/projects/show/geocoding-http-api
 
 Install
 =======
