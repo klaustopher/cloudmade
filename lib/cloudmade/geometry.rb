@@ -59,6 +59,14 @@ module CloudMade
     def to_latlon
       "#{@lat},#{@lon}"
     end
+    
+    def to_wkt
+      "POINT (#{wkt_latlon})"
+    end
+    
+    def wkt_latlon
+      "#{@lat} #{@lon}"
+    end
   end
 
   class Line < Geometry
@@ -70,6 +78,14 @@ module CloudMade
 
     def to_s
       "Line(#{@points.join(',')})"
+    end
+    
+    def to_wkt
+      "LINESTRING #{wkt_linestring}"
+    end
+    
+    def wkt_linestring
+      "(#{@points.map(&:wkt_latlon).join(', ')})"
     end
   end
 
@@ -83,6 +99,10 @@ module CloudMade
 
     def to_s
       "MultiLine(#{@lines.join(',')})"
+    end
+    
+    def to_wkt
+      "MULTILINESTRING (#{@lines.map(&:wkt_linestring).join(', ')})"
     end
   end
 
@@ -98,6 +118,15 @@ module CloudMade
     def to_s
       "Polygon(#{@border_line} - (#{@holes.join(',')}))"
     end
+    
+    def to_wkt
+      "POLYGON (#{wkt_polygon})"
+    end
+    
+    def wkt_polygon
+      holes = @holes.map(&:wkt_linestring).join(', ') if @holes.any?
+      [@border_line.wkt_linestring, holes].compact.join(', ')
+    end
   end
 
   class MultiPolygon < Geometry
@@ -109,6 +138,14 @@ module CloudMade
 
     def to_s
       "MultiPolygon(#{@polygons.join(',')})"
+    end
+    
+    def to_wkt
+      "MULTIPOLYGON (#{wkt_multipolygon})"
+    end
+    
+    def wkt_multipolygon
+      @polygons.map { |p| "(#{p.wkt_polygon})" }.join(', ')
     end
   end
 
