@@ -28,6 +28,11 @@ module CloudMade
         when 'multipolygon' then return MultiPolygon.new(data['coordinates'])
         end
       end
+    
+    end
+    
+    def wkt_helper
+      raise 'Not implemented'
     end
   end
 
@@ -61,10 +66,10 @@ module CloudMade
     end
     
     def to_wkt
-      "POINT (#{wkt_latlon})"
+      "POINT (#{wkt_helper})"
     end
-    
-    def wkt_latlon
+        
+    def wkt_helper
       "#{@lat} #{@lon}"
     end
   end
@@ -81,11 +86,11 @@ module CloudMade
     end
     
     def to_wkt
-      "LINESTRING #{wkt_linestring}"
+      "LINESTRING #{wkt_helper}"
     end
     
-    def wkt_linestring
-      "(#{@points.map(&:wkt_latlon).join(', ')})"
+    def wkt_helper
+      "(#{@points.map{ |point| point.wkt_helper }.join(', ')})"
     end
   end
 
@@ -102,7 +107,11 @@ module CloudMade
     end
     
     def to_wkt
-      "MULTILINESTRING (#{@lines.map(&:wkt_linestring).join(', ')})"
+      "MULTILINESTRING (#{wkt_helper})"
+    end
+        
+    def wkt_helper
+      @lines.map(&:wkt_helper).join(', ')
     end
   end
 
@@ -120,12 +129,12 @@ module CloudMade
     end
     
     def to_wkt
-      "POLYGON (#{wkt_polygon})"
+      "POLYGON (#{wkt_helper})"
     end
-    
-    def wkt_polygon
-      holes = @holes.map(&:wkt_linestring).join(', ') if @holes.any?
-      [@border_line.wkt_linestring, holes].compact.join(', ')
+
+    def wkt_helper
+      holes = @holes.map(&:wkt_helper).join(', ') if @holes.any?
+      [@border_line.wkt_helper, holes].compact.join(', ')
     end
   end
 
@@ -141,11 +150,11 @@ module CloudMade
     end
     
     def to_wkt
-      "MULTIPOLYGON (#{wkt_multipolygon})"
+      "MULTIPOLYGON (#{wkt_helper})"
     end
     
-    def wkt_multipolygon
-      @polygons.map { |p| "(#{p.wkt_polygon})" }.join(', ')
+    def wkt_helper
+      @polygons.map { |polygon| "(#{polygon.wkt_helper})"}.join(', ')
     end
   end
 
