@@ -29,6 +29,11 @@ class PointTest < Test::Unit::TestCase #:nodoc: all
     point = CloudMade::Point.new(1, 2)
     assert_equal point.to_latlon, '1,2'
   end
+  
+  def test_to_wkt
+    point = CloudMade::Point.new(1, 2)
+    assert_equal point.to_wkt, 'POINT (1 2)'
+  end
 end
 
 class LineTest < Test::Unit::TestCase #:nodoc: all
@@ -44,37 +49,63 @@ class LineTest < Test::Unit::TestCase #:nodoc: all
     line = CloudMade::Line.new([[1.1, 2.0], [0.1, 2.1], [0.5, 3.1], [3.1, 4.1]])
     assert_equal line.points.length, 4
   end
+  
+  def test_to_wkt
+    line = CloudMade::Line.new([[1.1, 2.0], [0.1, 2.1]])
+    assert_equal line.to_wkt, 'LINESTRING (1.1 2.0, 0.1 2.1)'
+  end
 end
 
 class MultiLineTest < Test::Unit::TestCase #:nodoc: all
-  def test_initialization
+  def multiline
     coords = [[[0.2, 35.2], [4.3, 45.1], [5.7, 11.2]], [[1.1, 33.2], [5.3, 22.2]]]
-    ml = CloudMade::MultiLine.new(coords)
-    assert_equal ml.lines.size, 2
-    assert_equal ml.lines[0].points.length, 3
-    assert_equal ml.lines[1].points.length, 2
-    assert_equal ml.lines[1].points[0].lon, 33.2
+    CloudMade::MultiLine.new(coords)
+  end
+  
+  def test_initialization
+    assert_equal multiline.lines.size, 2
+    assert_equal multiline.lines[0].points.length, 3
+    assert_equal multiline.lines[1].points.length, 2
+    assert_equal multiline.lines[1].points[0].lon, 33.2
+  end
+  
+  def test_to_wkt
+    assert_equal multiline.to_wkt, "MULTILINESTRING ((0.2 35.2, 4.3 45.1, 5.7 11.2), (1.1 33.2, 5.3 22.2))"
   end
 end
 
 class PolygonTest < Test::Unit::TestCase #:nodoc: all
-  def test_initialization
+  def polygon
     coords = [[[0.2, 35.2], [4.3, 45.1], [5.7, 11.2]], [[1.1, 33.2], [5.3, 22.2]]]
-    polygon = CloudMade::Polygon.new(coords)
+    CloudMade::Polygon.new(coords)    
+  end
+  
+  def test_initialization
     assert polygon.border_line != nil
     assert_equal polygon.border_line.points.size, 3
     assert polygon.holes != nil
     assert_equal polygon.holes.size, 1
   end
+  
+  def test_to_wkt
+    assert_equal polygon.to_wkt, 'POLYGON ((0.2 35.2, 4.3 45.1, 5.7 11.2), (1.1 33.2, 5.3 22.2))'
+  end
 end
 
 class MultiPolygonTest < Test::Unit::TestCase #:nodoc: all
-  def test_initialization
+  def multipolygon
     coords = [[[[0.2, 35.2], [4.3, 45.1]]], [[[1.1, 33.2], [5.3, 22.2]]]]
-    mp = CloudMade::MultiPolygon.new(coords)
-    assert_equal mp.polygons.size, 2
-    assert_equal mp.polygons[0].holes.size, 0
-    assert_equal mp.polygons[1].holes.size, 0
+    CloudMade::MultiPolygon.new(coords)
+  end
+  
+  def test_initialization
+    assert_equal multipolygon.polygons.size, 2
+    assert_equal multipolygon.polygons[0].holes.size, 0
+    assert_equal multipolygon.polygons[1].holes.size, 0
+  end
+  
+  def test_to_wkt
+    assert_equal multipolygon.to_wkt, 'MULTIPOLYGON (((0.2 35.2, 4.3 45.1)), ((1.1 33.2, 5.3 22.2)))'
   end
 end
 

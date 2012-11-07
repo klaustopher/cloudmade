@@ -106,7 +106,11 @@ module CloudMade
     end
 
     def to_s
-      results.join(',') if results != nil
+      results.join(',') if results.any?
+    end
+    
+    def to_wkt
+      results.map { |result| result.to_wkt unless result.geometry.nil? }.compact
     end
   end
 
@@ -139,6 +143,10 @@ module CloudMade
 
     def to_s
       self.geometry.to_s
+    end
+    
+    def to_wkt
+      self.geometry.to_wkt
     end
   end
 end
